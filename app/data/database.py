@@ -2,7 +2,7 @@ from typing import Generator
 
 from sqlmodel import create_engine, SQLModel, Session
 
-engine = create_engine(url="sqlite:///.students.db")
+engine = create_engine(url="sqlite:///students.db")
 
 def create_tables():
     SQLModel.metadata.create_all(engine)
