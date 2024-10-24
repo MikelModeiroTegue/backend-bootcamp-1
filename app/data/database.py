@@ -1,14 +1,19 @@
-from typing import Generator
-
 from sqlmodel import create_engine, SQLModel, Session
+from contextlib import contextmanager
 
-engine = create_engine(url="sqlite:///students.db")
+# Database connection
+DATABASE_URL = "sqlite:///school.db"
+engine = create_engine(DATABASE_URL)
+
 
 def create_tables():
     SQLModel.metadata.create_all(engine)
 
 
-
-def get_db() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+@contextmanager
+def get_session():
+    session = Session(engine)
+    try:
         yield session
+    finally:
+        session.close()

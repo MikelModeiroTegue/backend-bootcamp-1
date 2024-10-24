@@ -3,3 +3,8 @@ sqlmodel
 uvicorn
 pytest
 httpx
+pydantic
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+Python-JWT

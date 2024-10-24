@@ -1,13 +1,15 @@
 from typing import Any
 
+from fastapi import HTTPException, status
+
 from app.data.models import Student
-from app.data.repo import AbstractRepo
-from app.data.schemas import CreateStudentSchema, UpdateStudentSchema
+from app.data.student_repo import AbstractRepo
+from app.data.schemas import CreateUserSchema, UpdateUserSchema
 from app.domain.exceptions import StudentNotFound
 
 
 def create_student(
-    data: CreateStudentSchema,
+    data: CreateUserSchema,
     user_repo: AbstractRepo
 ) -> Student:
     user = user_repo.create_student(data=data)
@@ -28,7 +30,7 @@ def get_student(student_id: int, user_repo: AbstractRepo) -> Student:
 
 def update_student(
     student_id: int,
-    data: UpdateStudentSchema,
+    data: UpdateUserSchema,
     repo: AbstractRepo
 ) -> Student:
     user = repo.update_student(user_id=student_id, data=data)
@@ -41,3 +43,13 @@ def delete_student(student_id: int, repo: AbstractRepo):
     has_been_deleted = repo.delete_student(user_id=student_id)
     if not has_been_deleted:
         raise StudentNotFound
+
+def get_my_grades(student_id: int, repo: AbstractRepo):
+    grade = repo.get_my_grades(student_id)
+    if not grade:
+        raise HTTPException (
+                status_code= status.HTTP_204_NO_CONTENT, 
+                details = "No Content was Found",
+                headers = {"WWW-Authenticate":"Bearer"}
+            )
+    return grade

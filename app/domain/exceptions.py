@@ -11,3 +11,8 @@ class HTTPException(Exception):
 class StudentNotFound(HTTPException):
     def __init__(self, title="Not Found", message="Student not Found", status_code=status.HTTP_404_NOT_FOUND):
         super().__init__(title, message, status_code)
+
+
+class InstructorNotFound(HTTPException):
+    def __init__(self, title="Not Found", message="Instructor not Found", status_code=status.HTTP_404_NOT_FOUND):
+        super().__init__(title, message, status_code)
